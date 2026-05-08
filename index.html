@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="fr">
 <head>
@@ -8,63 +9,86 @@
     <style>
         :root { --p: #00468b; --s: #25d366; --bg: #f8f9fa; }
         body { font-family: 'Segoe UI', sans-serif; margin: 0; background: var(--bg); scroll-behavior: smooth; }
-        header { background: white; padding: 15px; text-align: center; border-bottom: 3px solid var(--p); position: sticky; top: 0; z-index: 1000; }
-        .logo { font-size: 26px; font-weight: bold; color: var(--p); text-transform: uppercase; }
         
-        /* قائمة الأقسام بالصور */
-        .menu-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(140px, 1fr)); gap: 15px; padding: 20px; max-width: 1000px; margin: 0 auto; }
-        .menu-item { background: white; border-radius: 12px; overflow: hidden; text-align: center; border: 1px solid #ddd; text-decoration: none; color: inherit; transition: 0.3s; }
-        .menu-item:hover { transform: translateY(-3px); border-color: var(--p); }
-        .menu-item img { width: 100%; height: 90px; object-fit: cover; background: #eee; }
-        .menu-item span { display: block; padding: 10px; font-weight: bold; font-size: 13px; }
+        /* ترويسة الموقع */
+        header { background: white; padding: 15px; text-align: center; border-bottom: 3px solid var(--p); position: sticky; top: 0; z-index: 1000; box-shadow: 0 2px 10px rgba(0,0,0,0.1); }
+        .logo { font-size: 26px; font-weight: bold; color: var(--p); text-transform: uppercase; letter-spacing: 1px; }
 
-        .container { max-width: 1000px; margin: 0 auto; padding: 0 15px; }
-        .section-title { color: var(--p); border-left: 5px solid var(--p); padding-left: 10px; margin: 40px 0 20px; }
-        .grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); gap: 20px; }
-        .card { background: white; padding: 20px; border-radius: 15px; text-align: center; border: 1px solid #eee; box-shadow: 0 2px 5px rgba(0,0,0,0.05); }
-        .price { color: #d9534f; font-size: 1.3em; font-weight: bold; display: block; margin: 15px 0; }
+        /* منيو الأقسام (أزرار دائرية احترافية) */
+        .nav-scroll { overflow-x: auto; white-space: nowrap; padding: 15px; background: white; border-bottom: 1px solid #eee; display: flex; gap: 10px; justify-content: center; }
+        .nav-btn { display: inline-block; padding: 8px 20px; border-radius: 20px; border: 1px solid #ddd; text-decoration: none; color: #555; font-weight: 500; transition: 0.3s; }
+        .nav-btn:hover { background: var(--p); color: white; border-color: var(--p); }
+
+        .container { max-width: 1100px; margin: 0 auto; padding: 20px; }
+        .section-title { color: var(--p); border-left: 5px solid var(--p); padding-left: 15px; margin: 40px 0 20px; font-size: 1.5em; }
         
-        .btn-p { background: var(--p); color: white; border: none; padding: 12px; border-radius: 8px; width: 100%; cursor: pointer; font-weight: bold; }
+        /* كروت المنتجات */
+        .grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)); gap: 25px; }
+        .card { background: white; padding: 25px; border-radius: 15px; text-align: center; border: 1px solid #eee; box-shadow: 0 4px 15px rgba(0,0,0,0.05); transition: 0.3s; }
+        .card:hover { transform: translateY(-5px); }
+        .price { color: #d9534f; font-size: 1.4em; font-weight: bold; display: block; margin: 15px 0; }
+        
+        /* الأزرار والنوافذ */
+        .btn-p { background: var(--p); color: white; border: none; padding: 12px; border-radius: 8px; width: 100%; cursor: pointer; font-weight: bold; font-size: 15px; }
         .modal { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.85); z-index: 3000; }
-        .m-content { background: white; max-width: 400px; margin: 50px auto; padding: 30px; border-radius: 20px; }
+        .m-content { background: white; max-width: 400px; margin: 50px auto; padding: 30px; border-radius: 20px; position: relative; }
         input, select, textarea { width: 100%; padding: 12px; margin: 10px 0; border: 1px solid #ccc; border-radius: 8px; box-sizing: border-box; }
-        .cart-btn { position: fixed; bottom: 20px; right: 20px; background: var(--s); color: white; padding: 15px 25px; border-radius: 50px; cursor: pointer; font-weight: bold; box-shadow: 0 5px 15px rgba(0,0,0,0.2); }
+        
+        .cart-btn { position: fixed; bottom: 25px; right: 25px; background: var(--s); color: white; padding: 15px 25px; border-radius: 50px; cursor: pointer; font-weight: bold; z-index: 2000; box-shadow: 0 5px 20px rgba(0,0,0,0.3); }
     </style>
 </head>
 <body>
 
 <header><div class="logo">Oasis Dent</div></header>
 
-<div class="container">
-    <div class="menu-grid">
-        <a href="#Composite" class="menu-item">
-            <img src="https://placehold.co/300x200/00468b/white?text=Composite" alt="Composite">
-            <span>Composite</span>
-        </a>
-        <a href="#Chirurgie" class="menu-item">
-            <img src="https://placehold.co/300x200/00468b/white?text=Chirurgie" alt="Chirurgie">
-            <span>Chirurgie</span>
-        </a>
-    </div>
+<div class="nav-scroll">
+    <a href="#Composite" class="nav-btn">Composite</a>
+    <a href="#Chirurgie" class="nav-btn">Chirurgie</a>
+    <a href="#Anesthesie" class="nav-btn">Anesthésie</a>
+    <a href="#Soin" class="nav-btn">Soin</a>
+    <a href="#Endodontie" class="nav-btn">Endodontie</a>
+    <a href="#Instruments" class="nav-btn">Instruments</a>
+</div>
 
+<div class="container">
     <h2 id="Composite" class="section-title">Composite</h2>
     <div class="grid">
         <div class="card">
             <strong>ZirconFill</strong>
             <span class="price">2950 DA</span>
-            <button class="btn-p" onclick="handlePurchase('ZirconFill', 2950)">🛒 Ajouter au panier</button>
+            <button class="btn-p" onclick="handleAction('ZirconFill', 2950)">🛒 Ajouter au panier</button>
         </div>
     </div>
+    
+    <h2 id="Chirurgie" class="section-title">Chirurgie</h2>
+    <div class="grid">
+        </div>
 </div>
 
 <div id="auth-modal" class="modal">
     <div class="m-content">
-        <h2 style="text-align:center; color:var(--p)">Créer un compte</h2>
-        <p style="text-align:center; font-size:14px;">Identifiez-vous pour commander.</p>
-        <input type="email" id="email" placeholder="Email">
-        <input type="password" id="password" placeholder="Mot de passe">
-        <button class="btn-p" onclick="signUp()">S'inscrire et continuer</button>
-        <button onclick="closeAuth()" style="width:100%; background:none; border:none; color:red; margin-top:10px; cursor:pointer;">Annuler</button>
+        <h2 style="text-align:center; color:var(--p); margin-top:0;">Créer un compte</h2>
+        <p style="text-align:center; font-size:14px; color:#666;">Identifiez-vous pour pouvoir commander vos produits.</p>
+        <input type="email" id="email" placeholder="Email (البريد الإلكتروني)">
+        <input type="password" id="password" placeholder="Mot de passe (كلمة المرور)">
+        <button class="btn-p" onclick="signUp()">S'inscrire et Commander</button>
+        <button onclick="closeAuth()" style="width:100%; background:none; border:none; color:red; margin-top:15px; cursor:pointer;">Annuler</button>
+    </div>
+</div>
+
+<div id="order-modal" class="modal">
+    <div class="m-content">
+        <h3 style="margin-top:0;">Détails de livraison</h3>
+        <select id="c_wilaya"><option value="">Choisir la Wilaya (69)</option></select>
+        <select id="c_type" onchange="toggleDelivery()">
+            <option value="Bureau">Retrait au Bureau</option>
+            <option value="Domicile">Livraison à Domicile</option>
+        </select>
+        <div id="home-fields" style="display:none;">
+            <input type="text" id="c_commune" placeholder="Commune (البلدية)">
+            <textarea id="c_addr" placeholder="Lieu exact (المكان بالتفصيل)"></textarea>
+        </div>
+        <button class="btn-p" style="background:var(--s)" onclick="confirmOrder()">✅ Confirmer la commande</button>
     </div>
 </div>
 
@@ -73,12 +97,20 @@
     const S_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImxreW15ZHdtc3BvZ2hrd2Robm5oIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzgyNjIzNzcsImV4cCI6MjA5MzgzODM3N30.CIMxmajrFjJ8KNrSqF_ifr1C13XUfOEk7_a2JV_yfqA"; 
     const _supabase = supabase.createClient(S_URL, S_KEY);
 
-    async function handlePurchase(name, price) {
+    let currentItem = null;
+
+    // تعبئة الولايات 69
+    const wilayas = ["01 Adrar","02 Chlef","03 Laghouat","04 Oum El Bouaghi","05 Batna","06 Béjaïa","07 Biskra","08 Béchar","09 Blida","10 Bouira","11 Tamanrasset","12 Tébessa","13 Tlemcen","14 Tiaret","15 Tizi Ouzou","16 Alger","17 Djelfa","18 Jijel","19 Sétif","20 Saïda","21 Skikda","22 Sidi Bel Abbès","23 Annaba","24 Guelma","25 Constantine","26 Médéa","27 Mostaganem","28 M'Sila","29 Mascara","30 Ouargla","31 Oran","32 El Bayadh","33 Illizi","34 Bordj Bou Arreridj","35 Boumerdès","36 El Tarf","37 Tindouf","38 Tissemsilt","39 El Oued","40 Khenchela","41 Souk Ahras","42 Tipaza","43 Mila","44 Aïn Defla","45 Naâma","46 Aïn Témouchent","47 Ghardaïa","48 Relizane","49 El M'Ghair","50 El Meniaâ","51 Ouled Djellal","52 Bordj Baji Mokhtar","53 Béni Abbès","54 Timimoun","55 Touggourt","56 Djanet","57 In Salah","58 In Guezzam","59 El Meghaïer","60 El Menia","61 Ouled Djellal","62 Bordj Baji Mokhtar","63 Béni Abbès","64 Timimoun","65 Touggourt","66 Djanet","67 In Salah","68 In Guezzam","69 Wilaya Nouvelle"];
+    const selW = document.getElementById('c_wilaya');
+    wilayas.forEach(w => { let o = document.createElement('option'); o.value = w; o.text = w; selW.appendChild(o); });
+
+    async function handleAction(name, price) {
+        currentItem = { name, price };
         const { data: { user } } = await _supabase.auth.getUser();
         if (!user) {
             document.getElementById('auth-modal').style.display = 'block';
         } else {
-            alert(name + " ajouté au panier !");
+            document.getElementById('order-modal').style.display = 'block';
         }
     }
 
@@ -86,10 +118,32 @@
         const email = document.getElementById('email').value;
         const password = document.getElementById('password').value;
         const { error } = await _supabase.auth.signUp({ email, password });
-        if (error) alert(error.message); else alert("Compte créé ! Vérifiez vos emails.");
+        if (error) alert(error.message); 
+        else {
+            alert("Compte créé ! Vous pouvez maintenant commander.");
+            location.reload();
+        }
+    }
+
+    function toggleDelivery() {
+        document.getElementById('home-fields').style.display = (document.getElementById('c_type').value === 'Domicile') ? 'block' : 'none';
     }
 
     function closeAuth() { document.getElementById('auth-modal').style.display='none'; }
+
+    async function confirmOrder() {
+        const { data: { user } } = await _supabase.auth.getUser();
+        const orderData = {
+            email: user.email,
+            item: currentItem.name,
+            wilaya: document.getElementById('c_wilaya').value,
+            type: document.getElementById('c_type').value,
+            commune: document.getElementById('c_commune').value || "N/A",
+            address: document.getElementById('c_addr').value || "N/A"
+        };
+        const { error } = await _supabase.from('orders').insert([orderData]);
+        if (error) alert(error.message); else { alert("✅ Commande envoyée !"); location.reload(); }
+    }
 </script>
 </body>
 </html>
