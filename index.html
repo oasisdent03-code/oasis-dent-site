@@ -1,165 +1,139 @@
-
 <!DOCTYPE html>
 <html lang="fr">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Oasis Dent | Boutique Professionnelle</title>
+    <title>Oasis Dent | Boutique</title>
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
     <style>
-        :root { --primary: #00468b; --success: #25d366; --bg: #f4f7f6; }
-        body { font-family: 'Segoe UI', Tahoma, sans-serif; margin: 0; background: var(--bg); color: #333; padding-bottom: 80px; }
+        :root { --p: #00468b; --s: #25d366; --bg: #f8f9fa; }
+        body { font-family: 'Segoe UI', sans-serif; margin: 0; background: var(--bg); padding-bottom: 80px; }
+        header { background: white; padding: 15px; text-align: center; border-bottom: 3px solid var(--p); position: sticky; top: 0; z-index: 100; }
         
-        /* الترويسة */
-        header { background: white; padding: 20px; text-align: center; border-bottom: 4px solid var(--primary); position: sticky; top: 0; z-index: 100; box-shadow: 0 2px 10px rgba(0,0,0,0.1); }
-        .logo { font-size: 28px; font-weight: bold; color: var(--primary); letter-spacing: 1px; }
+        /* شريط الأقسام المفقود */
+        .nav-bar { background: white; overflow-x: auto; white-space: nowrap; padding: 10px; border-bottom: 1px solid #ddd; position: sticky; top: 60px; z-index: 90; box-shadow: 0 2px 4px rgba(0,0,0,0.05); }
+        .nav-bar a { display: inline-block; padding: 8px 15px; text-decoration: none; color: var(--p); font-weight: bold; font-size: 14px; border: 1px solid var(--p); border-radius: 20px; margin-right: 5px; }
+        .nav-bar a:hover { background: var(--p); color: white; }
 
-        /* حاوية المنتجات */
-        .container { max-width: 1000px; margin: 30px auto; padding: 0 20px; }
-        .grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(250px, 1fr)); gap: 20px; }
+        .container { max-width: 1000px; margin: 20px auto; padding: 0 15px; }
+        .section-title { color: var(--p); border-left: 5px solid var(--p); padding-left: 10px; margin: 30px 0 15px; }
+        .grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)); gap: 15px; }
+        .card { background: white; padding: 20px; border-radius: 12px; text-align: center; border: 1px solid #eee; box-shadow: 0 2px 4px rgba(0,0,0,0.05); }
+        .price { color: #d9534f; font-size: 1.2em; font-weight: bold; display: block; margin: 10px 0; }
+        .btn { background: var(--p); color: white; border: none; padding: 10px; border-radius: 8px; width: 100%; cursor: pointer; font-weight: bold; }
         
-        /* بطاقة المنتج */
-        .card { background: white; border-radius: 15px; padding: 20px; text-align: center; border: 1px solid #ddd; transition: 0.3s; box-shadow: 0 4px 6px rgba(0,0,0,0.05); }
-        .card:hover { transform: translateY(-5px); box-shadow: 0 8px 15px rgba(0,0,0,0.1); }
-        .card strong { font-size: 1.2em; color: var(--primary); }
-        .price { color: #e74c3c; font-size: 1.4em; font-weight: bold; margin: 15px 0; display: block; }
-        
-        /* الأزرار */
-        .btn { background: var(--primary); color: white; border: none; padding: 12px 20px; border-radius: 8px; width: 100%; cursor: pointer; font-weight: bold; font-size: 16px; }
-        .cart-btn { position: fixed; bottom: 25px; right: 25px; background: var(--success); color: white; padding: 18px 28px; border-radius: 50px; cursor: pointer; font-weight: bold; box-shadow: 0 5px 20px rgba(0,0,0,0.3); z-index: 1000; border: none; }
-
-        /* النافذة المنبثقة (السلة) */
+        .cart-btn { position: fixed; bottom: 20px; right: 20px; background: var(--s); color: white; padding: 15px 25px; border-radius: 50px; cursor: pointer; font-weight: bold; box-shadow: 0 4px 15px rgba(0,0,0,0.3); z-index: 1000; }
         #modal { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.85); z-index: 2000; overflow-y: auto; }
-        .m-content { background: white; max-width: 480px; margin: 40px auto; padding: 30px; border-radius: 20px; position: relative; box-sizing: border-box; }
+        .m-content { background: white; max-width: 450px; margin: 20px auto; padding: 25px; border-radius: 15px; }
         
-        /* المجموع */
-        .total-box { background: #f8f9fa; border: 2px dashed var(--primary); padding: 15px; border-radius: 10px; margin: 15px 0; text-align: center; font-size: 1.3em; font-weight: bold; color: var(--primary); }
-        
-        input, select, textarea { width: 100%; padding: 12px; margin: 10px 0; border: 1px solid #ccc; border-radius: 8px; box-sizing: border-box; font-size: 15px; }
-        .confirm-btn { background: var(--success); color: white; border: none; padding: 18px; width: 100%; border-radius: 10px; font-size: 18px; font-weight: bold; cursor: pointer; margin-top: 15px; }
-        
-        label { font-weight: bold; font-size: 14px; color: #666; }
+        input, select, textarea { width: 100%; padding: 12px; margin: 8px 0; border: 1px solid #ccc; border-radius: 8px; box-sizing: border-box; }
+        .total-box { background: #e9ecef; padding: 10px; border-radius: 8px; margin: 10px 0; font-weight: bold; color: var(--p); text-align: center; font-size: 1.2em; }
+        .confirm-btn { background: var(--s); color: white; border: none; padding: 15px; width: 100%; border-radius: 8px; font-weight: bold; cursor: pointer; }
     </style>
 </head>
 <body>
 
-<header>
-    <div class="logo">Oasis Dent</div>
-</header>
+<header><div style="font-size: 26px; font-weight: bold; color: var(--p);">Oasis Dent</div></header>
+
+<div class="nav-bar">
+    <a href="#Composite">Composite</a>
+    <a href="#Chirurgie">Chirurgie</a>
+    <a href="#Anesthesie">Anesthésie</a>
+    <a href="#Soin">Soin</a>
+    <a href="#Endodontie">Endodontie</a>
+    <a href="#Finition">Finition</a>
+    <a href="#ODF">O.D.F</a>
+    <a href="#Desinfectant">Désinfectant</a>
+    <a href="#Champs">Champs</a>
+    <a href="#Instruments">Instruments</a>
+</div>
 
 <div class="container">
-    <h2 style="color: var(--primary); border-left: 5px solid var(--primary); padding-left: 15px; margin-bottom: 25px;">Produits Disponibles</h2>
+    <h2 id="Composite" class="section-title">Composite</h2>
     <div class="grid">
         <div class="card">
             <strong>ZirconFill</strong>
             <span class="price">2950 DA</span>
-            <button class="btn" onclick="addToCart('ZirconFill', 2950)">🛒 Ajouter au panier</button>
+            <button class="btn" onclick="addToCart('ZirconFill', 2950)">🛒 Ajouter</button>
         </div>
     </div>
+
+    <h2 id="Chirurgie" class="section-title">Chirurgie</h2><div class="grid"></div>
+    <h2 id="Anesthesie" class="section-title">Anesthésie</h2><div class="grid"></div>
+    <h2 id="Soin" class="section-title">Soin</h2><div class="grid"></div>
+    <h2 id="Endodontie" class="section-title">Endodontie</h2><div class="grid"></div>
 </div>
 
-<button class="cart-btn" onclick="openModal()">
-    🛒 Panier (<span id="count">0</span>)
-</button>
+<div class="cart-btn" onclick="openModal()">🛒 Panier (<span id="count">0</span>)</div>
 
 <div id="modal">
     <div class="m-content">
-        <h2 style="margin-top: 0; color: var(--primary);">Finaliser la commande</h2>
-        
-        <div id="items-list" style="background: #fffbe6; padding: 10px; border: 1px solid #ffe58f; border-radius: 8px; font-size: 0.95em;"></div>
-        
+        <h3 style="margin-top:0">Votre Commande</h3>
+        <div id="items-list" style="background:#f0f2f5; padding:10px; border-radius:8px; font-size:0.9em;"></div>
         <div class="total-box">Total: <span id="total-val">0</span> DA</div>
 
-        <label>Informations Personnelles</label>
         <input type="text" id="c_name" placeholder="Nom et Prénom" required>
-        <input type="tel" id="c_phone" placeholder="Numéro de Téléphone" required>
+        <input type="tel" id="c_phone" placeholder="N° de Téléphone" required>
         
-        <label>Livraison</label>
         <select id="c_delivery">
-            <option value="Noest">Transporteur: Noest</option>
-            <option value="Swift">Transporteur: Swift</option>
+            <option value="Noest">Livraison: Noest</option>
+            <option value="Swift">Livraison: Swift</option>
         </select>
 
-        <select id="c_type" onchange="toggleCommune()">
-            <option value="Bureau">Retrait au Bureau (Yalidine/Nord-Sud)</option>
-            <option value="Domicile">Livraison à Domicile</option>
+        <select id="c_type" onchange="toggleC()">
+            <option value="Bureau">Bureau (Yalidine/Nord-Sud)</option>
+            <option value="Domicile">Domicile</option>
         </select>
 
-        <select id="c_wilaya">
-            <option value="">Sélectionnez la Wilaya (69)</option>
-        </select>
-
+        <select id="c_wilaya"><option value="">Sélectionnez la Wilaya (69)</option></select>
+        
         <div id="commune-div" style="display:none;">
-            <input type="text" id="c_commune" placeholder="Nom de la Commune (البلدية)">
-            <textarea id="c_address" placeholder="Adresse exacte (العنوان بالتفصيل)"></textarea>
+            <input type="text" id="c_commune" placeholder="Commune (البلدية)">
+            <textarea id="c_addr" placeholder="Adresse complète"></textarea>
         </div>
         
         <button class="confirm-btn" onclick="submitOrder()">✅ Confirmer l'achat</button>
-        <button onclick="closeModal()" style="background:none; border:none; color:#999; width:100%; margin-top:15px; cursor:pointer; font-weight:bold;">Annuler</button>
+        <button onclick="closeModal()" style="background:none; border:none; color:red; width:100%; margin-top:10px; cursor:pointer;">Annuler</button>
     </div>
 </div>
 
 <script>
-    // قائمة الولايات الـ 69 كاملة
     const wilayas = ["01 Adrar","02 Chlef","03 Laghouat","04 Oum El Bouaghi","05 Batna","06 Béjaïa","07 Biskra","08 Béchar","09 Blida","10 Bouira","11 Tamanrasset","12 Tébessa","13 Tlemcen","14 Tiaret","15 Tizi Ouzou","16 Alger","17 Djelfa","18 Jijel","19 Sétif","20 Saïda","21 Skikda","22 Sidi Bel Abbès","23 Annaba","24 Guelma","25 Constantine","26 Médéa","27 Mostaganem","28 M'Sila","29 Mascara","30 Ouargla","31 Oran","32 El Bayadh","33 Illizi","34 Bordj Bou Arreridj","35 Boumerdès","36 El Tarf","37 Tindouf","38 Tissemsilt","39 El Oued","40 Khenchela","41 Souk Ahras","42 Tipaza","43 Mila","44 Aïn Defla","45 Naâma","46 Aïn Témouchent","47 Ghardaïa","48 Relizane","49 El M'Ghair","50 El Meniaâ","51 Ouled Djellal","52 Bordj Baji Mokhtar","53 Béni Abbès","54 Timimoun","55 Touggourt","56 Djanet","57 In Salah","58 In Guezzam","59 El Meghaïer","60 El Menia","61 Ouled Djellal","62 Bordj Baji Mokhtar","63 Béni Abbès","64 Timimoun","65 Touggourt","66 Djanet","67 In Salah","68 In Guezzam","69 Wilaya Nouvelle"];
-    
     const selW = document.getElementById('c_wilaya');
     wilayas.forEach(w => { let o = document.createElement('option'); o.value = w; o.text = w; selW.appendChild(o); });
 
-    function toggleCommune() {
-        const isHome = document.getElementById('c_type').value === 'Domicile';
-        document.getElementById('commune-div').style.display = isHome ? 'block' : 'none';
-    }
+    function toggleC() { document.getElementById('commune-div').style.display = (document.getElementById('c_type').value === 'Domicile') ? 'block' : 'none'; }
 
-    // --- إعدادات Supabase ---
     const S_URL = "https://lkmydwmspoghkwdhnnh.supabase.co";
-    const S_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImxreW15ZHdtc3BvZ2hrd2Robm5oIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzgyNjIzNzcsImV4cCI6MjA5MzgzODM3N30.CIMxmajrFjJ8KNrSqF_ifr1C13XUfOEk7_a2JV_yfqA"
+    const S_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImxreW15ZHdtc3BvZ2hrd2Robm5oIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzgyNjIzNzcsImV4cCI6MjA5MzgzODM3N30.CIMxmajrFjJ8KNrSqF_ifr1C13XUfOEk7_a2JV_yfqA" 
     const _supabase = supabase.createClient(S_URL, S_KEY);
 
     let cart = [];
-    function addToCart(n, p) {
-        cart.push({n, p});
-        document.getElementById('count').innerText = cart.length;
-        alert(n + " ajouté au panier !");
-    }
-
+    function addToCart(n, p) { cart.push({n, p}); document.getElementById('count').innerText = cart.length; alert(n + " ajouté!"); }
+    
     function openModal() {
-        if(cart.length === 0) return alert("Le panier est vide !");
-        document.getElementById('modal').style.display = 'block';
-        document.getElementById('items-list').innerHTML = cart.map(i => "🔹 " + i.n + " (" + i.p + " DA)").join("<br>");
-        document.getElementById('total-val').innerText = cart.reduce((s, i) => s + i.p, 0);
+        if(cart.length==0) return alert("Vide!");
+        document.getElementById('modal').style.display='block';
+        document.getElementById('items-list').innerHTML = cart.map(i=> i.n + " ("+i.p+" DA)").join("<br>");
+        document.getElementById('total-val').innerText = cart.reduce((s, i)=> s + i.p, 0);
     }
 
-    function closeModal() { document.getElementById('modal').style.display = 'none'; }
+    function closeModal() { document.getElementById('modal').style.display='none'; }
 
     async function submitOrder() {
-        const name = document.getElementById('c_name').value;
-        const phone = document.getElementById('c_phone').value;
-        const wilaya = document.getElementById('c_wilaya').value;
-        const type = document.getElementById('c_type').value;
-        const transport = document.getElementById('c_delivery').value;
-        const commune = document.getElementById('c_commune').value || "N/A";
-        const total = cart.reduce((s, i) => s + i.p, 0);
-
-        if(!name || !phone || !wilaya) return alert("Veuillez remplir les informations obligatoires !");
-
-        const orderData = {
-            customer_name: name,
-            phone: phone,
-            wilaya: wilaya,
-            commune: commune,
-            delivery_type: transport + " - " + type,
-            items: cart.map(i => i.n).join(", "),
-            total_price: total
+        const data = {
+            customer_name: document.getElementById('c_name').value,
+            phone: document.getElementById('c_phone').value,
+            wilaya: document.getElementById('c_wilaya').value,
+            commune: document.getElementById('c_commune').value || "Bureau",
+            delivery_type: document.getElementById('c_delivery').value + " (" + document.getElementById('c_type').value + ")",
+            items: cart.map(i=>i.n).join(", "),
+            total_price: cart.reduce((s, i)=>s+i.p, 0)
         };
-
-        const { error } = await _supabase.from('orders').insert([orderData]);
+        if(!data.customer_name || !data.phone || !data.wilaya) return alert("Remplir les champs!");
+        const { error } = await _supabase.from('orders').insert([data]);
         if (error) alert("Erreur: " + error.message);
-        else {
-            alert("✅ Commande reçue ! Total: " + total + " DA. Nous vous contacterons bientôt.");
-            cart = [];
-            location.reload();
-        }
+        else { alert("✅ Reçue! Total: " + data.total_price + " DA"); cart=[]; location.reload(); }
     }
 </script>
 </body>
