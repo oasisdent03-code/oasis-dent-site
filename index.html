@@ -3,60 +3,111 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Oasis Dent | 10 Categories</title>
+    <title>Oasis Dent | Boutique Officielle</title>
     <style>
-        body { font-family: sans-serif; margin: 0; background: #f4f4f4; }
-        header { background: #00468b; color: white; padding: 20px; text-align: center; }
-        
-        /* شريط الأقسام العلوي */
-        .nav-scroll { 
-            background: white; overflow-x: auto; white-space: nowrap; 
-            padding: 15px; border-bottom: 2px solid #00468b; position: sticky; top: 0;
-        }
-        .nav-scroll a { 
-            display: inline-block; padding: 10px 20px; background: #eee; 
-            margin-right: 10px; text-decoration: none; color: #333; border-radius: 20px; font-weight: bold;
-        }
+        :root { --primary: #00468b; --secondary: #25d366; --bg: #f5f7fa; }
+        body { font-family: 'Segoe UI', sans-serif; margin: 0; background: var(--bg); padding-bottom: 100px; }
+        header { background: white; padding: 20px; text-align: center; border-bottom: 3px solid var(--primary); sticky: top; position: sticky; top: 0; z-index: 100; }
+        .logo { font-size: 28px; font-weight: bold; color: var(--primary); }
 
-        .container { max-width: 1100px; margin: 20px auto; padding: 20px; }
-        .section { background: white; padding: 20px; margin-bottom: 30px; border-radius: 10px; box-shadow: 0 2px 5px rgba(0,0,0,0.1); }
-        .section h2 { color: #00468b; border-bottom: 2px solid #00468b; padding-bottom: 10px; }
-        
-        .product-box { display: inline-block; width: 200px; border: 1px solid #ddd; padding: 10px; text-align: center; border-radius: 5px; }
-        footer { text-align: center; padding: 30px; background: #333; color: white; }
+        .nav-scroll { background: white; overflow-x: auto; white-space: nowrap; padding: 10px; border-bottom: 1px solid #ddd; }
+        .nav-scroll a { display: inline-block; padding: 8px 15px; text-decoration: none; color: var(--primary); font-weight: bold; font-size: 14px; }
+
+        .container { max-width: 1000px; margin: 20px auto; padding: 0 15px; }
+        .section-title { background: var(--primary); color: white; padding: 10px 20px; border-radius: 5px; margin-top: 30px; }
+
+        /* Products */
+        .grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); gap: 15px; margin-top: 15px; }
+        .card { background: white; border-radius: 8px; padding: 15px; text-align: center; border: 1px solid #eee; }
+        .price { color: #d9534f; font-weight: bold; display: block; margin: 10px 0; }
+        .btn-add { background: var(--primary); color: white; border: none; padding: 8px 15px; border-radius: 5px; cursor: pointer; width: 100%; }
+
+        /* Floating Cart Button */
+        .cart-status { position: fixed; bottom: 20px; right: 20px; background: var(--secondary); color: white; padding: 15px 25px; border-radius: 50px; cursor: pointer; box-shadow: 0 4px 15px rgba(0,0,0,0.2); font-weight: bold; z-index: 1000; }
+
+        /* Checkout Modal */
+        #checkout-modal { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.7); z-index: 2000; overflow-y: auto; }
+        .modal-content { background: white; max-width: 500px; margin: 50px auto; padding: 25px; border-radius: 10px; }
+        input, select { width: 100%; padding: 10px; margin: 10px 0; border: 1px solid #ddd; border-radius: 5px; box-sizing: border-box; }
+        .btn-send { background: var(--secondary); color: white; border: none; padding: 15px; width: 100%; border-radius: 5px; font-weight: bold; font-size: 16px; cursor: pointer; }
     </style>
 </head>
 <body>
 
-<header><h1>Oasis Dent - Laghouat</h1></header>
+<header><div class="logo">Oasis Dent</div></header>
 
 <div class="nav-scroll">
-    <a href="#Chirurgie">Chirurgie</a>
-    <a href="#Anesthesie">Anesthesie</a>
-    <a href="#Soin">Soin</a>
-    <a href="#Endodontie">Endodontie</a>
-    <a href="#Composite">Composite</a>
-    <a href="#Finition">Finition</a>
-    <a href="#ODF">O.D.F</a>
-    <a href="#Desinfectant">Desinfectant</a>
-    <a href="#Champs">Champs</a>
-    <a href="#Instruments">Instruments</a>
+    <a href="#Chirurgie">Chirurgie</a> <a href="#Anesthesie">Anesthesie</a> <a href="#Soin">Soin</a>
+    <a href="#Endodontie">Endodontie</a> <a href="#Composite">Composite</a> <a href="#Finition">Finition</a>
+    <a href="#ODF">O.D.F</a> <a href="#Desinfectant">Desinfectant</a> <a href="#Champs">Champs</a> <a href="#Instruments">Instruments</a>
 </div>
 
 <div class="container">
-    <div id="Chirurgie" class="section"><h2>Chirurgie</h2><div class="product-box">Produit Chirurgie</div></div>
-    <div id="Anesthesie" class="section"><h2>Anesthesie</h2><div class="product-box">Produit Anesthesie</div></div>
-    <div id="Soin" class="section"><h2>Soin</h2><div class="product-box">Produit Soin</div></div>
-    <div id="Endodontie" class="section"><h2>Endodontie</h2><div class="product-box">Produit Endodontie</div></div>
-    <div id="Composite" class="section"><h2>Composite</h2><div class="product-box">Produit Composite</div></div>
-    <div id="Finition" class="section"><h2>Finition</h2><div class="product-box">Produit Finition</div></div>
-    <div id="ODF" class="section"><h2>O.D.F</h2><div class="product-box">Produit ODF</div></div>
-    <div id="Desinfectant" class="section"><h2>Desinfectant</h2><div class="product-box">Produit Desinfectant</div></div>
-    <div id="Champs" class="section"><h2>Champs</h2><div class="product-box">Produit Champs</div></div>
-    <div id="Instruments" class="section"><h2>Instruments</h2><div class="product-box">Produit Instruments</div></div>
+    <section id="Composite">
+        <h2 class="section-title">Composite</h2>
+        <div class="grid">
+            <div class="card">
+                <strong>ZirconFill</strong>
+                <span class="price">2950 DA</span>
+                <button class="btn-add" onclick="addToCart('ZirconFill', 2950)">Ajouter au panier</button>
+            </div>
+        </div>
+    </section>
+
+    </div>
+
+<div class="cart-status" onclick="openCheckout()">🛒 Panier (<span id="cart-count">0</span>)</div>
+
+<div id="checkout-modal">
+    <div class="modal-content">
+        <h3>Finaliser la commande</h3>
+        <div id="cart-items-list" style="margin-bottom: 20px; border-bottom: 1px solid #eee; padding-bottom: 10px;"></div>
+        <input type="text" id="nom" placeholder="Nom et Prénom" required>
+        <input type="text" id="wilaya" placeholder="Wilaya" required>
+        <input type="tel" id="phone" placeholder="Numéro de téléphone" required>
+        <select id="delivery">
+            <option value="Bureau">Livraison au Bureau</option>
+            <option value="Domicile">Livraison à Domicile</option>
+        </select>
+        <button class="btn-send" onclick="sendToWhatsApp()">Envoyer la commande (WhatsApp)</button>
+        <button onclick="closeModal()" style="background: none; border: none; color: red; cursor: pointer; width: 100%; margin-top: 10px;">Annuler</button>
+    </div>
 </div>
 
-<footer>&copy; 2026 Oasis Dent</footer>
+<script>
+    let cart = [];
+
+    function addToCart(name, price) {
+        cart.push({name, price});
+        document.getElementById('cart-count').innerText = cart.length;
+        alert(name + " ajouté au panier !");
+    }
+
+    function openCheckout() {
+        if(cart.length === 0) { alert("Le panier est vide !"); return; }
+        document.getElementById('checkout-modal').style.display = 'block';
+        let list = cart.map(item => "- " + item.name + " (" + item.price + " DA)").join('<br>');
+        document.getElementById('cart-items-list').innerHTML = "<strong>Produits:</strong><br>" + list;
+    }
+
+    function closeModal() { document.getElementById('checkout-modal').style.display = 'none'; }
+
+    function sendToWhatsApp() {
+        let nom = document.getElementById('nom').value;
+        let wilaya = document.getElementById('wilaya').value;
+        let phone = document.getElementById('phone').value;
+        let delivery = document.getElementById('delivery').value;
+
+        if(!nom || !wilaya || !phone) { alert("Veuillez remplir tous les champs !"); return; }
+
+        let productList = cart.map(item => "- " + item.name).join('%0A');
+        let total = cart.reduce((sum, item) => sum + item.price, 0);
+
+        let message = `Bonsoir Oasis Dent, je souhaite commander:%0A${productList}%0A%0A*Total:* ${total} DA%0A%0A*Infos Client:*%0A- Nom: ${nom}%0A- Wilaya: ${wilaya}%0A- Tél: ${phone}%0A- Livraison: ${delivery}`;
+        
+        window.open(`https://wa.me/213660336879?text=${message}`);
+    }
+</script>
 
 </body>
 </html>
