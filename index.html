@@ -3,99 +3,122 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Oasis Dent | Boutique Dentaire Algérie</title>
+    <title>Oasis Dent | Catalogue Matériel Dentaire</title>
     <style>
-        :root { --primary-color: #2c3e50; --accent-color: #3498db; --bg-color: #f4f4f4; }
-        body { font-family: 'Segoe UI', Tahoma, sans-serif; margin: 0; background-color: var(--bg-color); }
+        :root { --main-blue: #0056b3; --light-bg: #f8f9fa; --border-color: #ddd; }
+        body { font-family: 'Segoe UI', Tahoma, sans-serif; margin: 0; background-color: var(--light-bg); }
         
         /* Header */
-        header { background: white; padding: 20px; text-align: center; border-bottom: 3px solid var(--accent-color); box-shadow: 0 2px 5px rgba(0,0,0,0.1); }
-        .logo { font-size: 32px; font-weight: bold; color: var(--primary-color); text-transform: uppercase; letter-spacing: 2px; }
-        .slogan { color: #7f8c8d; font-size: 14px; margin-top: 5px; }
+        header { background: white; padding: 15px 0; border-bottom: 2px solid var(--main-blue); position: sticky; top: 0; z-index: 1000; box-shadow: 0 2px 10px rgba(0,0,0,0.1); }
+        .nav-container { max-width: 1200px; margin: 0 auto; display: flex; justify-content: space-between; align-items: center; padding: 0 20px; }
+        .logo { font-size: 28px; font-weight: bold; color: var(--main-blue); text-decoration: none; }
 
-        /* Main Layout */
-        .main-container { display: flex; max-width: 1200px; margin: 20px auto; padding: 0 15px; gap: 20px; }
+        /* Main Content */
+        .container { max-width: 1200px; margin: 30px auto; padding: 0 20px; }
+        
+        .category-section { margin-bottom: 50px; }
+        .category-title { 
+            background: var(--main-blue); color: white; padding: 10px 20px; 
+            border-radius: 5px; display: inline-block; margin-bottom: 20px;
+            font-size: 20px; font-weight: bold;
+        }
 
-        /* Sidebar - Categories */
-        .sidebar { width: 250px; background: white; padding: 20px; border-radius: 8px; height: fit-content; box-shadow: 0 2px 5px rgba(0,0,0,0.05); }
-        .sidebar h3 { font-size: 18px; border-bottom: 2px solid var(--accent-color); padding-bottom: 10px; margin-bottom: 15px; }
-        .sidebar ul { list-style: none; padding: 0; }
-        .sidebar ul li { padding: 10px 0; border-bottom: 1px solid #eee; color: #555; cursor: pointer; transition: 0.3s; }
-        .sidebar ul li:hover { color: var(--accent-color); padding-left: 5px; }
-
-        /* Product Grid */
-        .product-grid { flex: 1; display: grid; grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)); gap: 20px; }
-        .product-card { background: white; border-radius: 8px; overflow: hidden; transition: 0.3s; border: 1px solid #eee; text-align: center; padding: 15px; position: relative; }
+        /* Grid */
+        .product-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(240px, 1fr)); gap: 25px; }
+        .product-card { 
+            background: white; border: 1px solid var(--border-color); border-radius: 8px; 
+            padding: 15px; text-align: center; transition: 0.3s;
+        }
         .product-card:hover { transform: translateY(-5px); box-shadow: 0 5px 15px rgba(0,0,0,0.1); }
         
-        /* Placeholder for Product Image */
-        .product-img { width: 100%; height: 180px; background: #eee; border-radius: 5px; margin-bottom: 15px; display: flex; align-items: center; justify-content: center; color: #999; }
+        .product-img { 
+            width: 100%; height: 160px; background: #eee; border-radius: 5px; 
+            margin-bottom: 15px; display: flex; align-items: center; justify-content: center; color: #999;
+        }
         
-        .product-title { font-size: 15px; font-weight: bold; height: 40px; margin-bottom: 10px; display: block; color: #333; text-decoration: none; }
-        .product-price { color: var(--accent-color); font-size: 18px; font-weight: bold; margin-bottom: 15px; display: block; }
+        .product-name { font-size: 16px; font-weight: bold; margin-bottom: 10px; color: #333; display: block; height: 40px; }
+        .product-price { color: #d9534f; font-size: 18px; font-weight: bold; display: block; margin-bottom: 15px; }
         
-        .btn-cart { background: var(--accent-color); color: white; border: none; padding: 10px 15px; border-radius: 5px; cursor: pointer; width: 100%; font-weight: bold; }
-        .btn-cart:hover { background: #2980b9; }
+        .btn-order { 
+            display: block; background: #25d366; color: white; text-decoration: none; 
+            padding: 10px; border-radius: 5px; font-weight: bold; transition: 0.3s;
+        }
+        .btn-order:hover { background: #128c7e; }
 
-        /* Footer */
-        footer { background: var(--primary-color); color: white; text-align: center; padding: 30px; margin-top: 50px; }
-        
-        @media (max-width: 768px) { .main-container { flex-direction: column; } .sidebar { width: 100%; box-sizing: border-box; } }
+        footer { background: #333; color: white; text-align: center; padding: 40px 20px; margin-top: 50px; }
     </style>
 </head>
 <body>
 
 <header>
-    <div class="logo">Oasis Dent</div>
-    <div class="slogan">Tout pour sublimer votre art dentaire</div>
+    <div class="nav-container">
+        <a href="#" class="logo">Oasis Dent</a>
+        <div style="font-size: 14px; color: #666;">Laghouat, Algérie</div>
+    </div>
 </header>
 
-<div class="main-container">
-    <aside class="sidebar">
-        <h3>Catégories</h3>
-        <ul>
-            <li>Scellement</li>
-            <li>Endodontie</li>
-            <li>Hygiène & Désinfection</li>
-            <li>Restauration</li>
-            <li>Usage unique</li>
-        </ul>
-    </aside>
+<div class="container">
 
-    <main class="product-grid">
-        <div class="product-card">
-            <div class="product-img">Photo (Biodentine)</div>
-            <a href="#" class="product-title">SEPTODONT BIODENTINE (XP)</a>
-            <span class="product-price">12,500 DA</span>
-            <button class="btn-cart">Ajouter au panier</button>
+    <section class="category-section">
+        <div class="category-title">Scellement</div>
+        <div class="product-grid">
+            <div class="product-card">
+                <div class="product-img">Photo (Biodentine)</div>
+                <span class="product-name">Biodentine XP (Septodont)</span>
+                <span class="product-price">12,500 DA</span>
+                <a href="https://wa.me/213660336879" class="btn-order">Commander sur WhatsApp</a>
+            </div>
+            <div class="product-card">
+                <div class="product-img">Photo</div>
+                <span class="product-name">Oxyde de Zinc (Airtel)</span>
+                <span class="product-price">1,200 DA</span>
+                <a href="#" class="btn-order">Commander</a>
+            </div>
         </div>
+    </section>
 
-        <div class="product-card">
-            <div class="product-img">Photo (ZirconFill)</div>
-            <a href="#" class="product-title">ZIRCONFILL COMPOSITE</a>
-            <span class="product-price">4,800 DA</span>
-            <button class="btn-cart">Ajouter au panier</button>
+    <section class="category-section">
+        <div class="category-title">Endodontie</div>
+        <div class="product-grid">
+            <div class="product-card">
+                <div class="product-img">Photo</div>
+                <span class="product-name">Pulpodent (Septodont)</span>
+                <span class="product-price">7,500 DA</span>
+                <a href="#" class="btn-order">Commander</a>
+            </div>
+            <div class="product-card">
+                <div class="product-img">Photo</div>
+                <span class="product-name">Cône de Gutta Percha</span>
+                <span class="product-price">2,400 DA</span>
+                <a href="#" class="btn-order">Commander</a>
+            </div>
         </div>
+    </section>
 
-        <div class="product-card">
-            <div class="product-img">Photo (Elite HD)</div>
-            <a href="#" class="product-title">ZHERMACK ELITE HD+ P&C</a>
-            <span class="product-price">9,200 DA</span>
-            <button class="btn-cart">Ajouter au panier</button>
+    <section class="category-section">
+        <div class="category-title">Consommables</div>
+        <div class="product-grid">
+            <div class="product-card">
+                <div class="product-img">Photo (Elite HD)</div>
+                <span class="product-name">Elite HD+ P&C (Zhermack)</span>
+                <span class="product-price">9,200 DA</span>
+                <a href="#" class="btn-order">Commander</a>
+            </div>
+            <div class="product-card">
+                <div class="product-img">Photo</div>
+                <span class="product-name">Gants Examen (Boite de 100)</span>
+                <span class="product-price">1,100 DA</span>
+                <a href="#" class="btn-order">Commander</a>
+            </div>
         </div>
+    </section>
 
-        <div class="product-card">
-            <div class="product-img">Photo</div>
-            <a href="#" class="product-title">OXYDE DE ZINC (AIRTEL)</a>
-            <span class="product-price">1,200 DA</span>
-            <button class="btn-cart">Ajouter au panier</button>
-        </div>
-    </main>
 </div>
 
 <footer>
-    <p>&copy; 2026 Oasis Dent - Laghouat, Algérie</p>
-    <p>Contact: 0660XXXXXX</p>
+    <p>Oasis Dent - Distributeur Officiel à Laghouat</p>
+    <p>Horaires: 08:00 - 12:00 | 15:00 - 18:30</p>
+    <p>&copy; 2026 Tous droits réservés</p>
 </footer>
 
 </body>
