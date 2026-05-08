@@ -18,10 +18,11 @@
         .price { color: #d9534f; font-size: 1.3em; font-weight: bold; display: block; margin: 10px 0; }
         .btn { background: var(--p); color: white; border: none; padding: 12px; border-radius: 8px; width: 100%; cursor: pointer; font-weight: bold; }
         .cart-btn { position: fixed; bottom: 20px; right: 20px; background: var(--s); color: white; padding: 15px 25px; border-radius: 50px; cursor: pointer; font-weight: bold; box-shadow: 0 4px 15px rgba(0,0,0,0.3); z-index: 1000; }
-        #modal { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.8); z-index: 2000; }
-        .m-content { background: white; max-width: 400px; margin: 50px auto; padding: 25px; border-radius: 15px; position: relative; }
-        input, select { width: 100%; padding: 12px; margin: 8px 0; border: 1px solid #ccc; border-radius: 8px; box-sizing: border-box; }
-        .confirm-btn { background: var(--s); color: white; border: none; padding: 15px; width: 100%; border-radius: 8px; font-weight: bold; cursor: pointer; }
+        #modal { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.8); z-index: 2000; overflow-y: auto; }
+        .m-content { background: white; max-width: 450px; margin: 20px auto; padding: 25px; border-radius: 15px; position: relative; }
+        input, select { width: 100%; padding: 12px; margin: 8px 0; border: 1px solid #ccc; border-radius: 8px; box-sizing: border-box; font-size: 14px; }
+        .confirm-btn { background: var(--s); color: white; border: none; padding: 15px; width: 100%; border-radius: 8px; font-weight: bold; cursor: pointer; font-size: 16px; margin-top: 10px; }
+        .total-box { background: #e9ecef; padding: 10px; border-radius: 8px; margin-top: 10px; font-weight: bold; color: var(--p); text-align: right; font-size: 1.1em; }
     </style>
 </head>
 <body>
@@ -48,23 +49,32 @@
 
 <div id="modal">
     <div class="m-content">
-        <h3>Finaliser la commande</h3>
-        <div id="items-list" style="background:#f0f2f5; padding:10px; border-radius:8px; margin-bottom:10px; font-size:0.9em;"></div>
+        <h3 style="margin-top: 0;">Finaliser la commande</h3>
+        <div id="items-list" style="background:#f0f2f5; padding:10px; border-radius:8px; font-size:0.9em; max-height: 150px; overflow-y: auto;"></div>
+        <div class="total-box">Total à payer: <span id="total-val">0</span> DA</div>
         <input type="text" id="c_name" placeholder="Nom et Prénom" required>
-        <input type="text" id="c_wilaya" placeholder="Wilaya" required>
+        <select id="c_wilaya"><option value="">Sélectionnez votre Wilaya</option></select>
         <input type="tel" id="c_phone" placeholder="N° de Téléphone" required>
         <select id="c_delivery">
-            <option value="Bureau">Livraison au Bureau</option>
-            <option value="Domicile">Livraison à Domicile</option>
+            <option value="Nord-Sud (Bureau)">Nord-Sud (Bureau)</option>
+            <option value="Nord-Sud (Domicile)">Nord-Sud (Domicile)</option>
+            <option value="Swift (Bureau)">Swift (Bureau)</option>
+            <option value="Swift (Domicile)">Swift (Domicile)</option>
         </select>
         <button class="confirm-btn" onclick="submitOrder()">✅ Confirmer l'achat</button>
-        <button onclick="closeModal()" style="background:none; border:none; color:red; width:100%; margin-top:10px;">Annuler</button>
+        <button onclick="closeModal()" style="background:none; border:none; color:red; width:100%; margin-top:10px; cursor:pointer;">Annuler</button>
     </div>
 </div>
 
 <script>
+    // قائمة 69 ولاية
+    const wList = ["01 Adrar","02 Chlef","03 Laghouat","04 Oum El Bouaghi","05 Batna","06 Béjaïa","07 Biskra","08 Béchar","09 Blida","10 Bouira","11 Tamanrasset","12 Tébessa","13 Tlemcen","14 Tiaret","15 Tizi Ouzou","16 Alger","17 Djelfa","18 Jijel","19 Sétif","20 Saïda","21 Skikda","22 Sidi Bel Abbès","23 Annaba","24 Guelma","25 Constantine","26 Médéa","27 Mostaganem","28 M'Sila","29 Mascara","30 Ouargla","31 Oran","32 El Bayadh","33 Illizi","34 Bordj Bou Arreridj","35 Boumerdès","36 El Tarf","37 Tindouf","38 Tissemsilt","39 El Oued","40 Khenchela","41 Souk Ahras","42 Tipaza","43 Mila","44 Aïn Defla","45 Naâma","46 Aïn Témouchent","47 Ghardaïa","48 Relizane","49 El M'Ghair","50 El Meniaâ","51 Ouled Djellal","52 Bordj Baji Mokhtar","53 Béni Abbès","54 Timimoun","55 Touggourt","56 Djanet","57 In Salah","58 In Guezzam","59 El Meghaïer","60 El Menia","61 Ouled Djellal","62 Bordj Baji Mokhtar","63 Béni Abbès","64 Timimoun","65 Touggourt","66 Djanet","67 In Salah","68 In Guezzam","69 Wilaya Nouvelle"];
+    const select = document.getElementById('c_wilaya');
+    wList.forEach(w => { let o = document.createElement('option'); o.value = w; o.text = w; select.appendChild(o); });
+
+    // --- الربط مع SUPABASE ---
     const S_URL = "https://lkmydwmspoghkwdhnnh.supabase.co";
-    // ضع المفتاح الطويل مكان النجوم في السطر القادم
+    // *** ضـع مـفـتـاح الـ ANON الـطـويـل هـنـا بـيـن الـقـوسـيـن ***
     const S_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImxreW15ZHdtc3BvZ2hrd2Robm5oIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzgyNjIzNzcsImV4cCI6MjA5MzgzODM3N30.CIMxmajrFjJ8KNrSqF_ifr1C13XUfOEk7_a2JV_yfqA"; 
     const _supabase = supabase.createClient(S_URL, S_KEY);
 
@@ -73,7 +83,8 @@
     function openModal() {
         if(cart.length==0) return alert("Panier vide!");
         document.getElementById('modal').style.display='block';
-        document.getElementById('items-list').innerText = cart.map(i=>i.n).join(", ");
+        document.getElementById('items-list').innerHTML = cart.map(i=> "• " + i.n + " ("+i.p+" DA)").join("<br>");
+        document.getElementById('total-val').innerText = cart.reduce((s, i)=> s + i.p, 0);
     }
     function closeModal() { document.getElementById('modal').style.display='none'; }
 
@@ -86,9 +97,10 @@
             items: cart.map(i=>i.n).join(", "),
             total_price: cart.reduce((s, i)=>s+i.p, 0)
         };
+        if(!data.customer_name || !data.wilaya || !data.phone) return alert("Remplir tous les champs!");
         const { error } = await _supabase.from('orders').insert([data]);
         if (error) alert("Erreur: " + error.message);
-        else { alert("Commande reçue!"); cart=[]; location.reload(); }
+        else { alert("✅ Commande reçue! Total: " + data.total_price + " DA"); cart=[]; location.reload(); }
     }
 </script>
 </body>
