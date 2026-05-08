@@ -4,25 +4,25 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Oasis Dent | Boutique</title>
+    <title>Oasis Dent | Boutique Professionnelle</title>
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
     <style>
-        :root { --p: #00468b; --s: #25d366; --bg: #f8f9fa; }
-        body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; margin: 0; background: var(--bg); padding-bottom: 80px; }
+        :root { --p: #00468b; --s: #25d366; }
+        body { font-family: 'Segoe UI', sans-serif; margin: 0; background: #f8f9fa; padding-bottom: 80px; }
         header { background: white; padding: 15px; text-align: center; border-bottom: 3px solid var(--p); position: sticky; top: 0; z-index: 100; box-shadow: 0 2px 5px rgba(0,0,0,0.1); }
-        .nav { background: white; overflow-x: auto; white-space: nowrap; padding: 10px; border-bottom: 1px solid #ddd; }
-        .nav a { display: inline-block; padding: 8px 15px; text-decoration: none; color: var(--p); font-weight: bold; font-size: 14px; }
-        .container { max-width: 1000px; margin: 20px auto; padding: 0 15px; }
-        .grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); gap: 15px; }
+        .nav { background: white; overflow-x: auto; white-space: nowrap; padding: 10px; border-bottom: 1px solid #ddd; text-align: center; }
+        .nav a { display: inline-block; padding: 8px 15px; text-decoration: none; color: var(--p); font-weight: bold; }
+        .container { max-width: 900px; margin: 20px auto; padding: 0 15px; }
+        .grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)); gap: 20px; }
         .card { background: white; padding: 20px; border-radius: 12px; text-align: center; border: 1px solid #eee; transition: 0.3s; }
         .card:hover { transform: translateY(-5px); box-shadow: 0 5px 15px rgba(0,0,0,0.1); }
-        .price { color: #d9534f; font-size: 1.2em; font-weight: bold; display: block; margin: 10px 0; }
+        .price { color: #d9534f; font-size: 1.3em; font-weight: bold; display: block; margin: 10px 0; }
         .btn { background: var(--p); color: white; border: none; padding: 12px; border-radius: 8px; width: 100%; cursor: pointer; font-weight: bold; }
         .cart-btn { position: fixed; bottom: 20px; right: 20px; background: var(--s); color: white; padding: 15px 25px; border-radius: 50px; cursor: pointer; font-weight: bold; box-shadow: 0 4px 15px rgba(0,0,0,0.3); z-index: 1000; }
-        #modal { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.8); z-index: 2000; overflow-y: auto; }
-        .m-content { background: white; max-width: 450px; margin: 30px auto; padding: 25px; border-radius: 15px; position: relative; }
+        #modal { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.8); z-index: 2000; }
+        .m-content { background: white; max-width: 400px; margin: 50px auto; padding: 25px; border-radius: 15px; position: relative; }
         input, select { width: 100%; padding: 12px; margin: 8px 0; border: 1px solid #ccc; border-radius: 8px; box-sizing: border-box; }
-        .confirm-btn { background: var(--s); color: white; border: none; padding: 15px; width: 100%; border-radius: 8px; font-size: 16px; font-weight: bold; cursor: pointer; margin-top: 10px; }
+        .confirm-btn { background: var(--s); color: white; border: none; padding: 15px; width: 100%; border-radius: 8px; font-weight: bold; cursor: pointer; margin-top: 10px; }
     </style>
 </head>
 <body>
@@ -30,97 +30,168 @@
 <header><div style="font-size: 26px; font-weight: bold; color: var(--p);">Oasis Dent</div></header>
 
 <div class="nav">
-    <a href="#Composite">Composite</a> <a href="#Chirurgie">Chirurgie</a> <a href="#Anesthesie">Anesthesie</a>
-    <a href="#Soin">Soin</a> <a href="#Endodontie">Endodontie</a> <a href="#Finition">Finition</a>
-    <a href="#ODF">O.D.F</a> <a href="#Desinfectant">Desinfectant</a> <a href="#Champs">Champs</a> <a href="#Instruments">Instruments</a>
+    <a href="#Composite">Composite</a> <a href="#Chirurgie">Chirurgie</a> <a href="#Soin">Soin</a>
+    <a href="#Endodontie">Endodontie</a> <a href="#ODF">O.D.F</a> <a href="#Instruments">Instruments</a>
 </div>
 
 <div class="container">
-    <h2 id="Composite" style="color: var(--p); border-left: 5px solid var(--p); padding-left: 10px;">Composite</h2>
+    <h2 id="Composite" style="color: var(--p);">Section Composite</h2>
     <div class="grid">
         <div class="card">
-            <strong style="font-size: 1.1em;">ZirconFill</strong>
+            <strong style="font-size: 1.2em;">ZirconFill</strong>
             <span class="price">2950 DA</span>
             <button class="btn" onclick="addToCart('ZirconFill', 2950)">🛒 Ajouter au panier</button>
         </div>
     </div>
 </div>
 
-<div class="cart-btn" id="cart-floating-btn" onclick="openModal()">
-    🛒 Panier (<span id="count">0</span>)
-</div>
+<div class="cart-btn" onclick="openModal()">🛒 Panier (<span id="count">0</span>)</div>
 
 <div id="modal">
     <div class="m-content">
-        <h3 style="margin-top: 0; color: var(--p);">Votre Commande</h3>
-        <div id="items-list" style="background: #f0f2f5; padding: 10px; border-radius: 8px; margin-bottom: 15px; font-size: 0.9em; max-height: 100px; overflow-y: auto;"></div>
+        <h3 style="margin-top:0">Votre Commande</h3>
+        <div id="items-list" style="background:#f0f2f5; padding:10px; border-radius:8px; margin-bottom:10px; font-size:0.9em;"></div>
         
-        <input type="text" id="cust_name" placeholder="Nom et Prénom" required>
-        <input type="text" id="cust_wilaya" placeholder="Wilaya" required>
-        <input type="tel" id="cust_phone" placeholder="N° de Téléphone" required>
-        <select id="cust_delivery">
-            <option value="Bureau">Livraison au Bureau (Yalidine/Nord-Sud)</option>
+        <input type="text" id="c_name" placeholder="Nom et Prénom" required>
+        <input type="text" id="c_wilaya" placeholder="Wilaya" required>
+        <input type="tel" id="c_phone" placeholder="N° de Téléphone" required>
+        <select id="c_delivery">
+            <option value="Bureau">Livraison au Bureau (Yalidine)</option>
             <option value="Domicile">Livraison à Domicile</option>
         </select>
         
-        <button class="confirm-btn" onclick="submitOrder()">✅ Confirmer la commande</button>
-        <button onclick="closeModal()" style="background:none; border:none; color:#777; width:100%; margin-top:15px; cursor:pointer;">⬅️ Retour au magasin</button>
+        <button class="confirm-btn" onclick="submitOrder()">✅ Confirmer l'achat</button>
+        <button onclick="closeModal()" style="background:none; border:none; color:red; width:100%; margin-top:10px; cursor:pointer;">Annuler</button>
     </div>
 </div>
 
 <script>
-    // --- إعدادات الربط مع SUPABASE ---
-    // انسخ الرابط الذي يبدأ بـ https من صفحة API في Supabase وضعه هنا
-    const SUPABASE_URL = "https://lkmydwmspoghkwdhnnh.supabase.co"; 
-    eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImxreW15ZHdtc3BvZ2hrd2Robm5oIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzgyNjIzNzcsImV4cCI6MjA5MzgzODM3N30.CIMxmajrFjJ8KNrSqF_ifr1C13XUfOEk7_a2JV_yfqA
-    const SUPABASE_KEY = "ضـع_هـنـا_مـفـتـاح_ANON_الـطـويـل"; 
+    // --- إعدادات الربط ---
+    const S_URL = "https://lkmydwmspoghkwdhnnh.supabase.co";
+    const S_KEY = "<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Oasis Dent | Boutique Professionnelle</title>
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <style>
+        :root { --p: #00468b; --s: #25d366; }
+        body { font-family: 'Segoe UI', sans-serif; margin: 0; background: #f8f9fa; padding-bottom: 80px; }
+        header { background: white; padding: 15px; text-align: center; border-bottom: 3px solid var(--p); position: sticky; top: 0; z-index: 100; box-shadow: 0 2px 5px rgba(0,0,0,0.1); }
+        .nav { background: white; overflow-x: auto; white-space: nowrap; padding: 10px; border-bottom: 1px solid #ddd; text-align: center; }
+        .nav a { display: inline-block; padding: 8px 15px; text-decoration: none; color: var(--p); font-weight: bold; }
+        .container { max-width: 900px; margin: 20px auto; padding: 0 15px; }
+        .grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)); gap: 20px; }
+        .card { background: white; padding: 20px; border-radius: 12px; text-align: center; border: 1px solid #eee; transition: 0.3s; }
+        .card:hover { transform: translateY(-5px); box-shadow: 0 5px 15px rgba(0,0,0,0.1); }
+        .price { color: #d9534f; font-size: 1.3em; font-weight: bold; display: block; margin: 10px 0; }
+        .btn { background: var(--p); color: white; border: none; padding: 12px; border-radius: 8px; width: 100%; cursor: pointer; font-weight: bold; }
+        .cart-btn { position: fixed; bottom: 20px; right: 20px; background: var(--s); color: white; padding: 15px 25px; border-radius: 50px; cursor: pointer; font-weight: bold; box-shadow: 0 4px 15px rgba(0,0,0,0.3); z-index: 1000; }
+        #modal { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.8); z-index: 2000; }
+        .m-content { background: white; max-width: 400px; margin: 50px auto; padding: 25px; border-radius: 15px; position: relative; }
+        input, select { width: 100%; padding: 12px; margin: 8px 0; border: 1px solid #ccc; border-radius: 8px; box-sizing: border-box; }
+        .confirm-btn { background: var(--s); color: white; border: none; padding: 15px; width: 100%; border-radius: 8px; font-weight: bold; cursor: pointer; margin-top: 10px; }
+    </style>
+</head>
+<body>
 
-    const _supabase = supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
+<header><div style="font-size: 26px; font-weight: bold; color: var(--p);">Oasis Dent</div></header>
+
+<div class="nav">
+    <a href="#Composite">Composite</a> <a href="#Chirurgie">Chirurgie</a> <a href="#Soin">Soin</a>
+    <a href="#Endodontie">Endodontie</a> <a href="#ODF">O.D.F</a> <a href="#Instruments">Instruments</a>
+</div>
+
+<div class="container">
+    <h2 id="Composite" style="color: var(--p);">Section Composite</h2>
+    <div class="grid">
+        <div class="card">
+            <strong style="font-size: 1.2em;">ZirconFill</strong>
+            <span class="price">2950 DA</span>
+            <button class="btn" onclick="addToCart('ZirconFill', 2950)">🛒 Ajouter au panier</button>
+        </div>
+    </div>
+</div>
+
+<div class="cart-btn" onclick="openModal()">🛒 Panier (<span id="count">0</span>)</div>
+
+<div id="modal">
+    <div class="m-content">
+        <h3 style="margin-top:0">Votre Commande</h3>
+        <div id="items-list" style="background:#f0f2f5; padding:10px; border-radius:8px; margin-bottom:10px; font-size:0.9em;"></div>
+        
+        <input type="text" id="c_name" placeholder="Nom et Prénom" required>
+        <input type="text" id="c_wilaya" placeholder="Wilaya" required>
+        <input type="tel" id="c_phone" placeholder="N° de Téléphone" required>
+        <select id="c_delivery">
+            <option value="Bureau">Livraison au Bureau (Yalidine)</option>
+            <option value="Domicile">Livraison à Domicile</option>
+        </select>
+        
+        <button class="confirm-btn" onclick="submitOrder()">✅ Confirmer l'achat</button>
+        <button onclick="closeModal()" style="background:none; border:none; color:red; width:100%; margin-top:10px; cursor:pointer;">Annuler</button>
+    </div>
+</div>
+
+<script>
+    // --- إعدادات الربط ---
+    const S_URL = "https://lkmydwmspoghkwdhnnh.supabase.co";
+    const S_KEY = "ضع_هنا_مفتاح_ANON_الخاص_بك"; 
+    const _supabase = supabase.createClient(S_URL, S_KEY);
 
     let cart = [];
-
-    function addToCart(name, price) {
-        cart.push({name, price});
-        document.getElementById('count').innerText = cart.length;
-        alert(name + " a été ajouté au panier !");
-    }
-
+    function addToCart(n, p) { cart.push({n, p}); document.getElementById('count').innerText = cart.length; alert(n + " ajouté!"); }
     function openModal() {
-        if(cart.length === 0) return alert("Votre panier est vide !");
-        document.getElementById('modal').style.display = 'block';
-        document.getElementById('items-list').innerHTML = cart.map(i => "• " + i.name + " (" + i.price + " DA)").join("<br>");
+        if(cart.length==0) return alert("Panier vide!");
+        document.getElementById('modal').style.display='block';
+        document.getElementById('items-list').innerText = cart.map(i=>i.n).join(", ");
     }
-
-    function closeModal() {
-        document.getElementById('modal').style.display = 'none';
-    }
+    function closeModal() { document.getElementById('modal').style.display='none'; }
 
     async function submitOrder() {
-        const name = document.getElementById('cust_name').value;
-        const wilaya = document.getElementById('cust_wilaya').value;
-        const phone = document.getElementById('cust_phone').value;
-        const delivery = document.getElementById('cust_delivery').value;
-
-        if(!name || !wilaya || !phone) return alert("Veuillez remplir tous les champs !");
-
-        const orderData = {
-            customer_name: name,
-            wilaya: wilaya,
-            phone: phone,
-            delivery_type: delivery,
-            items: cart.map(i => i.name).join(", "),
-            total_price: cart.reduce((sum, item) => sum + item.price, 0)
+        const data = {
+            customer_name: document.getElementById('c_name').value,
+            wilaya: document.getElementById('c_wilaya').value,
+            phone: document.getElementById('c_phone').value,
+            delivery_type: document.getElementById('c_delivery').value,
+            items: cart.map(i=>i.n).join(", "),
+            total_price: cart.reduce((s, i)=>s+i.p, 0)
         };
+        if(!data.customer_name || !data.phone) return alert("Remplir les champs!");
 
-        const { error } = await _supabase.from('orders').insert([orderData]);
+        const { error } = await _supabase.from('orders').insert([data]);
+        if (error) alert("Erreur: " + error.message);
+        else { alert("Commande reçue! Merci."); cart=[]; location.reload(); }
+    }
+</script>
+</body>
+</html>"; 
+    const _supabase = supabase.createClient(S_URL, S_KEY);
 
-        if (error) {
-            alert("Erreur lors de l'envoi: " + error.message);
-        } else {
-            alert("Félicitations ! Votre commande a été reçue. Nous vous contacterons bientôt.");
-            cart = [];
-            location.reload();
-        }
+    let cart = [];
+    function addToCart(n, p) { cart.push({n, p}); document.getElementById('count').innerText = cart.length; alert(n + " ajouté!"); }
+    function openModal() {
+        if(cart.length==0) return alert("Panier vide!");
+        document.getElementById('modal').style.display='block';
+        document.getElementById('items-list').innerText = cart.map(i=>i.n).join(", ");
+    }
+    function closeModal() { document.getElementById('modal').style.display='none'; }
+
+    async function submitOrder() {
+        const data = {
+            customer_name: document.getElementById('c_name').value,
+            wilaya: document.getElementById('c_wilaya').value,
+            phone: document.getElementById('c_phone').value,
+            delivery_type: document.getElementById('c_delivery').value,
+            items: cart.map(i=>i.n).join(", "),
+            total_price: cart.reduce((s, i)=>s+i.p, 0)
+        };
+        if(!data.customer_name || !data.phone) return alert("Remplir les champs!");
+
+        const { error } = await _supabase.from('orders').insert([data]);
+        if (error) alert("Erreur: " + error.message);
+        else { alert("Commande reçue! Merci."); cart=[]; location.reload(); }
     }
 </script>
 </body>
