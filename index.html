@@ -3,34 +3,55 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Oasis Dent | Matériel Dentaire</title>
+    <title>Oasis Dent | Boutique</title>
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
     <style>
-        :root { --primary: #00468b; --secondary: #27ae60; --bg: #f8f9fa; }
-        body { font-family: 'Segoe UI', sans-serif; margin: 0; background: var(--bg); padding-bottom: 80px; }
-        header { background: white; padding: 20px; text-align: center; border-bottom: 3px solid var(--primary); box-shadow: 0 2px 10px rgba(0,0,0,0.1); position: sticky; top: 0; z-index: 100; }
-        .logo { font-size: 26px; font-weight: bold; color: var(--primary); letter-spacing: 1px; }
+        :root { --primary: #00468b; --secondary: #27ae60; --bg: #f4f7f6; }
+        body { font-family: 'Segoe UI', Arial, sans-serif; margin: 0; background: var(--bg); padding-bottom: 80px; }
         
-        .nav-categories { background: white; overflow-x: auto; white-space: nowrap; padding: 12px; border-bottom: 1px solid #ddd; }
-        .nav-categories a { display: inline-block; padding: 8px 18px; text-decoration: none; color: var(--primary); font-weight: bold; font-size: 14px; background: #eee; border-radius: 20px; margin-right: 8px; }
+        /* Header بدون كلمة الأغواط */
+        header { background: white; padding: 20px; text-align: center; border-bottom: 3px solid var(--primary); box-shadow: 0 2px 5px rgba(0,0,0,0.1); sticky: top; position: sticky; top: 0; z-index: 100; }
+        .logo { font-size: 28px; font-weight: bold; color: var(--primary); text-transform: uppercase; }
+
+        /* شريط الأقسام الذي كنت تبحث عنه */
+        .nav-categories { 
+            background: #ffffff; 
+            overflow-x: auto; 
+            white-space: nowrap; 
+            padding: 12px; 
+            border-bottom: 1px solid #ddd;
+            display: flex;
+            gap: 10px;
+        }
+        .nav-categories a { 
+            display: inline-block; 
+            padding: 8px 15px; 
+            text-decoration: none; 
+            color: var(--primary); 
+            font-weight: bold; 
+            font-size: 13px; 
+            background: #f0f0f0; 
+            border-radius: 20px;
+            border: 1px solid #eee;
+        }
 
         .container { max-width: 1100px; margin: 20px auto; padding: 0 15px; }
-        .section-title { color: var(--primary); border-left: 5px solid var(--primary); padding-left: 15px; margin: 40px 0 20px; }
+        .section-title { color: var(--primary); border-bottom: 2px solid var(--primary); padding-bottom: 10px; margin-top: 40px; }
 
-        .products-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)); gap: 20px; }
-        .product-card { background: white; border-radius: 12px; padding: 20px; text-align: center; box-shadow: 0 4px 6px rgba(0,0,0,0.05); border: 1px solid #eee; transition: 0.3s; }
-        .product-card:hover { transform: translateY(-5px); box-shadow: 0 10px 20px rgba(0,0,0,0.1); }
-        .p-price { display: block; color: #e74c3c; font-size: 20px; font-weight: bold; margin: 15px 0; }
-        .btn-add { background: var(--primary); color: white; border: none; padding: 12px; width: 100%; border-radius: 8px; font-weight: bold; cursor: pointer; }
+        /* المنتج المطللوب */
+        .grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)); gap: 20px; margin-top: 20px; }
+        .card { background: white; border-radius: 10px; padding: 20px; text-align: center; box-shadow: 0 2px 8px rgba(0,0,0,0.05); border: 1px solid #eee; }
+        .price { color: #d9534f; font-size: 22px; font-weight: bold; margin: 15px 0; display: block; }
+        .btn-add { background: var(--primary); color: white; border: none; padding: 12px; width: 100%; border-radius: 8px; cursor: pointer; font-weight: bold; }
 
-        /* Cart UI */
-        .cart-bar { position: fixed; bottom: 0; left: 0; right: 0; background: var(--primary); color: white; padding: 15px 25px; display: flex; justify-content: space-between; align-items: center; cursor: pointer; z-index: 1000; box-shadow: 0 -5px 15px rgba(0,0,0,0.2); }
-        
-        /* Modal Checkout */
-        #checkout-modal { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.85); z-index: 2000; overflow-y: auto; }
-        .modal-content { background: white; max-width: 500px; margin: 30px auto; padding: 30px; border-radius: 15px; position: relative; }
-        input, select { width: 100%; padding: 12px; margin: 10px 0; border: 1px solid #ccc; border-radius: 8px; box-sizing: border-box; font-size: 16px; }
-        .btn-confirm { background: var(--secondary); color: white; border: none; padding: 15px; width: 100%; border-radius: 8px; font-size: 18px; font-weight: bold; cursor: pointer; margin-top: 15px; }
+        /* السلة السفلية */
+        .cart-status { position: fixed; bottom: 0; left: 0; right: 0; background: var(--primary); color: white; padding: 15px; text-align: center; font-weight: bold; cursor: pointer; z-index: 1000; }
+
+        /* نافذة الطلب */
+        #modal { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.8); z-index: 2000; }
+        .modal-content { background: white; max-width: 450px; margin: 40px auto; padding: 25px; border-radius: 12px; }
+        input, select { width: 100%; padding: 12px; margin: 8px 0; border: 1px solid #ccc; border-radius: 6px; box-sizing: border-box; }
+        .btn-send { background: var(--secondary); color: white; border: none; padding: 15px; width: 100%; border-radius: 6px; font-weight: bold; font-size: 16px; cursor: pointer; margin-top: 10px; }
     </style>
 </head>
 <body>
@@ -44,63 +65,88 @@
 </div>
 
 <div class="container">
-    <h2 id="Composite" class="section-title">Composite</h2>
-    <div class="products-grid">
-        <div class="product-card">
-            <h3>ZirconFill</h3>
-            <span class="p-price">2950 DA</span>
-            <button class="btn-add" onclick="addToCart('ZirconFill', 2950)">Ajouter au panier</button>
+    <section id="Composite">
+        <h2 class="section-title">Composite</h2>
+        <div class="grid">
+            <div class="card">
+                <h3>ZirconFill</h3>
+                <span class="price">2950 DA</span>
+                <button class="btn-add" onclick="addToCart('ZirconFill', 2950)">Ajouter au panier</button>
+            </div>
         </div>
-    </div>
-    
-    </div>
-
-<div class="cart-bar" id="cart-bar" onclick="openCheckout()" style="display:none;">
-    <span>🛒 Mon Panier (<span id="cart-count">0</span>)</span>
-    <span id="cart-total">Total: 0 DA</span>
+    </section>
 </div>
 
-<div id="checkout-modal">
+<div class="cart-status" id="cart-status" style="display:none;" onclick="showForm()">
+    🛒 Voir le panier (<span id="count">0</span>) - <span id="total">0</span> DA
+</div>
+
+<div id="modal">
     <div class="modal-content">
-        <h2>Confirmer la Commande</h2>
-        <div id="order-summary" style="background:#f0f0f0; padding:15px; border-radius:8px; margin-bottom:20px;"></div>
-        
-        <input type="text" id="cust-name" placeholder="Nom et Prénom" required>
-        <input type="text" id="cust-wilaya" placeholder="Wilaya" required>
-        <input type="tel" id="cust-phone" placeholder="Numéro de téléphone" required>
-        <select id="cust-delivery">
-            <option value="Bureau">Livraison au Bureau (Yalidine/Nord-Sud)</option>
-            <option value="Domicile">Livraison à Domicile</option>
+        <h3>Détails de la commande</h3>
+        <p id="summary" style="background:#f9f9f9; padding:10px; border-radius:5px; font-size:14px;"></p>
+        <input type="text" id="name" placeholder="Nom et Prénom" required>
+        <input type="text" id="wilaya" placeholder="Wilaya" required>
+        <input type="tel" id="phone" placeholder="Numéro de téléphone" required>
+        <select id="deliv">
+            <option value="Bureau">Bureau (Yalidine/Nord-Sud)</option>
+            <option value="Domicile">À Domicile</option>
         </select>
-        
-        <button class="btn-confirm" id="submit-btn" onclick="submitOrder()">✅ Envoyer la Commande</button>
-        <button onclick="closeModal()" style="width:100%; background:none; border:none; color:#777; margin-top:10px; cursor:pointer;">Annuler</button>
+        <button class="btn-send" id="btn-submit" onclick="sendOrder()">Confirmer la commande</button>
+        <button onclick="document.getElementById('modal').style.display='none'" style="width:100%; background:none; border:none; color:red; margin-top:10px; cursor:pointer;">Annuler</button>
     </div>
 </div>
 
 <script>
-    // ربط Supabase
-    const _URL = "https://lkmydwmspoghkwdhnnh.supabase.co";
-    const _KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImxreW15ZHdtc3BvZ2hrd2Robm5oIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzgyNjIzNzcsImV4cCI6MjA5MzgzODM3N30.CIMxmajrFjJ8KNrSqF_ifr1C13XUfOEk7_a2JV_yfqA";
-    const supabase = supabase.createClient(_URL, _KEY);
+    // بيانات الربط الخاصة بك
+    const SB_URL = "https://lkmydwmspoghkwdhnnh.supabase.co";
+    const SB_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImxreW15ZHdtc3BvZ2hrd2Robm5oIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzgyNjIzNzcsImV4cCI6MjA5MzgzODM3N30.CIMxmajrFjJ8KNrSqF_ifr1C13XUfOEk7_a2JV_yfqA";
+    const supabaseClient = supabase.createClient(SB_URL, SB_KEY);
 
     let cart = [];
 
     function addToCart(name, price) {
         cart.push({name, price});
-        updateCartUI();
+        updateCart();
     }
 
-    function updateCartUI() {
+    function updateCart() {
         const count = cart.length;
-        document.getElementById('cart-count').innerText = count;
-        const total = cart.reduce((sum, item) => sum + item.price, 0);
-        document.getElementById('cart-total').innerText = "Total: " + total + " DA";
-        document.getElementById('cart-bar').style.display = count > 0 ? 'flex' : 'none';
+        const total = cart.reduce((s, i) => s + i.price, 0);
+        document.getElementById('count').innerText = count;
+        document.getElementById('total').innerText = total;
+        document.getElementById('cart-status').style.display = count > 0 ? 'block' : 'none';
     }
 
-    function openCheckout() {
-        document.getElementById('checkout-modal').style.display = 'block';
-        let itemsHTML = cart.map(i => `<div>- ${i.name} (${i.price} DA)</div>`).join('');
-        document.getElementById('order-summary').innerHTML = `<strong>Produits:</strong>${itemsHTML}`;
+    function showForm() {
+        document.getElementById('modal').style.display = 'block';
+        document.getElementById('summary').innerText = "Produits: " + cart.map(i => i.name).join(', ');
     }
+
+    async function sendOrder() {
+        const n = document.getElementById('name').value;
+        const w = document.getElementById('wilaya').value;
+        const p = document.getElementById('phone').value;
+        const d = document.getElementById('deliv').value;
+
+        if(!n || !w || !p) { alert("Remplir les champs!"); return; }
+
+        const btn = document.getElementById('btn-submit');
+        btn.innerText = "Envoi...";
+        btn.disabled = true;
+
+        const { error } = await supabaseClient.from('orders').insert([{
+            customer_name: n, wilaya: w, phone: p, delivery_type: d,
+            items: cart.map(i => i.name).join(', '),
+            total_price: cart.reduce((s, i) => s + i.price, 0)
+        }]);
+
+        if(error) {
+            alert("Erreur: " + error.message);
+            btn.disabled = false;
+        } else {
+            alert("Commande reçue! Merci.");
+            cart = []; updateCart();
+            document.getElementById('modal').style.display = 'none';
+            btn.disabled = false; btn.innerText = "Confirmer la commande";
+        }
