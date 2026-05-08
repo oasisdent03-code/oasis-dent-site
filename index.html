@@ -3,58 +3,99 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Oasis Dent | Matériel & Consommables</title>
+    <title>Oasis Dent | Boutique Dentaire Algérie</title>
     <style>
-        body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; margin: 0; padding: 0; background-color: #f8f9fa; }
-        header { background-color: #004a99; color: white; padding: 40px 20px; text-align: center; }
-        .container { max-width: 800px; margin: 20px auto; background: white; padding: 20px; border-radius: 10px; box-shadow: 0 4px 6px rgba(0,0,0,0.1); }
-        h1 { margin: 0; font-size: 2.5em; }
-        .slogan { font-style: italic; opacity: 0.9; }
-        .product-list { margin-top: 30px; text-align: left; }
-        .product-item { padding: 15px; border-bottom: 1px solid #eee; display: flex; justify-content: space-between; align-items: center; }
-        .product-name { font-weight: bold; color: #004a99; }
-        .status { color: #28a745; font-size: 0.9em; border: 1px solid #28a745; padding: 2px 8px; border-radius: 4px; }
-        .contact-section { margin-top: 30px; text-align: center; background: #e9ecef; padding: 20px; border-radius: 8px; }
-        .whatsapp-btn { display: inline-block; background-color: #25d366; color: white; padding: 15px 30px; text-decoration: none; border-radius: 5px; font-weight: bold; transition: 0.3s; }
-        .whatsapp-btn:hover { background-color: #128c7e; }
-        footer { text-align: center; padding: 20px; color: #777; font-size: 0.8em; }
+        :root { --primary-color: #2c3e50; --accent-color: #3498db; --bg-color: #f4f4f4; }
+        body { font-family: 'Segoe UI', Tahoma, sans-serif; margin: 0; background-color: var(--bg-color); }
+        
+        /* Header */
+        header { background: white; padding: 20px; text-align: center; border-bottom: 3px solid var(--accent-color); box-shadow: 0 2px 5px rgba(0,0,0,0.1); }
+        .logo { font-size: 32px; font-weight: bold; color: var(--primary-color); text-transform: uppercase; letter-spacing: 2px; }
+        .slogan { color: #7f8c8d; font-size: 14px; margin-top: 5px; }
+
+        /* Main Layout */
+        .main-container { display: flex; max-width: 1200px; margin: 20px auto; padding: 0 15px; gap: 20px; }
+
+        /* Sidebar - Categories */
+        .sidebar { width: 250px; background: white; padding: 20px; border-radius: 8px; height: fit-content; box-shadow: 0 2px 5px rgba(0,0,0,0.05); }
+        .sidebar h3 { font-size: 18px; border-bottom: 2px solid var(--accent-color); padding-bottom: 10px; margin-bottom: 15px; }
+        .sidebar ul { list-style: none; padding: 0; }
+        .sidebar ul li { padding: 10px 0; border-bottom: 1px solid #eee; color: #555; cursor: pointer; transition: 0.3s; }
+        .sidebar ul li:hover { color: var(--accent-color); padding-left: 5px; }
+
+        /* Product Grid */
+        .product-grid { flex: 1; display: grid; grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)); gap: 20px; }
+        .product-card { background: white; border-radius: 8px; overflow: hidden; transition: 0.3s; border: 1px solid #eee; text-align: center; padding: 15px; position: relative; }
+        .product-card:hover { transform: translateY(-5px); box-shadow: 0 5px 15px rgba(0,0,0,0.1); }
+        
+        /* Placeholder for Product Image */
+        .product-img { width: 100%; height: 180px; background: #eee; border-radius: 5px; margin-bottom: 15px; display: flex; align-items: center; justify-content: center; color: #999; }
+        
+        .product-title { font-size: 15px; font-weight: bold; height: 40px; margin-bottom: 10px; display: block; color: #333; text-decoration: none; }
+        .product-price { color: var(--accent-color); font-size: 18px; font-weight: bold; margin-bottom: 15px; display: block; }
+        
+        .btn-cart { background: var(--accent-color); color: white; border: none; padding: 10px 15px; border-radius: 5px; cursor: pointer; width: 100%; font-weight: bold; }
+        .btn-cart:hover { background: #2980b9; }
+
+        /* Footer */
+        footer { background: var(--primary-color); color: white; text-align: center; padding: 30px; margin-top: 50px; }
+        
+        @media (max-width: 768px) { .main-container { flex-direction: column; } .sidebar { width: 100%; box-sizing: border-box; } }
     </style>
 </head>
 <body>
 
 <header>
-    <h1>Oasis Dent</h1>
-    <p class="slogan">Tout pour sublimer votre art dentaire</p>
+    <div class="logo">Oasis Dent</div>
+    <div class="slogan">Tout pour sublimer votre art dentaire</div>
 </header>
 
-<div class="container">
-    <h2>Catalogue de Produits</h2>
-    <div class="product-list">
-        <div class="product-item">
-            <span class="product-name">Biodentine</span>
-            <span class="status">En Stock</span>
-        </div>
-        <div class="product-item">
-            <span class="product-name">ZirconFill</span>
-            <span class="status">En Stock</span>
-        </div>
-        <div class="product-item">
-            <span class="product-name">Elite HD+</span>
-            <span class="status">En Stock</span>
-        </div>
-    </div>
+<div class="main-container">
+    <aside class="sidebar">
+        <h3>Catégories</h3>
+        <ul>
+            <li>Scellement</li>
+            <li>Endodontie</li>
+            <li>Hygiène & Désinfection</li>
+            <li>Restauration</li>
+            <li>Usage unique</li>
+        </ul>
+    </aside>
 
-    <div class="contact-section">
-        <h3>Contactez-nous à Laghouat</h3>
-        <p>📍 Adresse : Laghouat, Algérie</p>
-        <p>🕒 Horaires : 08:00 - 12:00 | 15:00 - 18:30</p>
-        <br>
-        <a href="https://wa.me/213XXXXXXXXX" class="whatsapp-btn">Commander sur WhatsApp</a>
-    </div>
+    <main class="product-grid">
+        <div class="product-card">
+            <div class="product-img">Photo (Biodentine)</div>
+            <a href="#" class="product-title">SEPTODONT BIODENTINE (XP)</a>
+            <span class="product-price">12,500 DA</span>
+            <button class="btn-cart">Ajouter au panier</button>
+        </div>
+
+        <div class="product-card">
+            <div class="product-img">Photo (ZirconFill)</div>
+            <a href="#" class="product-title">ZIRCONFILL COMPOSITE</a>
+            <span class="product-price">4,800 DA</span>
+            <button class="btn-cart">Ajouter au panier</button>
+        </div>
+
+        <div class="product-card">
+            <div class="product-img">Photo (Elite HD)</div>
+            <a href="#" class="product-title">ZHERMACK ELITE HD+ P&C</a>
+            <span class="product-price">9,200 DA</span>
+            <button class="btn-cart">Ajouter au panier</button>
+        </div>
+
+        <div class="product-card">
+            <div class="product-img">Photo</div>
+            <a href="#" class="product-title">OXYDE DE ZINC (AIRTEL)</a>
+            <span class="product-price">1,200 DA</span>
+            <button class="btn-cart">Ajouter au panier</button>
+        </div>
+    </main>
 </div>
 
 <footer>
-    &copy; 2026 Oasis Dent - Distributeur de Matériel Dentaire.
+    <p>&copy; 2026 Oasis Dent - Laghouat, Algérie</p>
+    <p>Contact: 0660XXXXXX</p>
 </footer>
 
 </body>
